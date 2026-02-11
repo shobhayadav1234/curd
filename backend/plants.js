@@ -8,17 +8,21 @@ app.use(cors());
 app.use(express.json());
 
 
-mongoose.connect(process.env.MONGO_UR)
+mongoose.connect(process.env.MONGO_URL)
   .then(() => {
-    console.log(" mongosedb connected");
+    console.log("mongodb atlas connected");
+
+    app.listen(PORT, () => {
+      console.log(`server running on port ${PORT}`);
+    });
   })
   .catch((err) => {
-    console.log(err);
+    console.log("DB error:", err);
   });
 
 const plantsSchema = new mongoose.Schema({
   name: String,
-  course: String,
+  course: String, 
   fee: Number
 });
 
@@ -88,12 +92,4 @@ app.post("/add",async(req,res)=>{
 
 
 
-const PORT =process.env.PORT||3000
 
-app.listen(PORT,()=>{
-  console.log("server running on prot 3000")
-})
-
-// app.listen(3000, () => {
-//   console.log("Server running on port 3000");
-// });

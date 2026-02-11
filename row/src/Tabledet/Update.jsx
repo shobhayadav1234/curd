@@ -15,7 +15,7 @@ const Update = () => {
 
 
   useEffect(() => {
-    fetch(`http://localhost:3000/Update/${id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/Update/${id}`)
       .then(res => res.json())
       .then(data => {
         setFormData({

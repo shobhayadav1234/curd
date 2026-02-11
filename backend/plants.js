@@ -3,9 +3,12 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const express = require("express")
 const app = express();
+require("dotenv").config()
 app.use(cors());
 app.use(express.json());
-mongoose.connect("mongodb://127.0.0.1:27017/plantsdb")
+
+
+mongoose.connect(process.env.MONGO_UR)
   .then(() => {
     console.log(" mongosedb connected");
   })
@@ -68,7 +71,6 @@ app.delete("/delete/:id", async (req, res) => {
 
 
 
-
     // post-add data 
 app.post("/add",async(req,res)=>{
   const{name,course,fee}=req.body;
@@ -84,6 +86,14 @@ app.post("/add",async(req,res)=>{
 });
 
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
-});
+
+
+const PORT =process.env.PORT||3000
+
+app.listen(PORT,()=>{
+  console.log("server running on prot 3000")
+})
+
+// app.listen(3000, () => {
+//   console.log("Server running on port 3000");
+// });

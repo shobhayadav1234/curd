@@ -8,17 +8,13 @@ app.use(cors());
 app.use(express.json());
 
 
-mongoose.connect(process.env.MONGO_URL)
-  .then(() => {
-    console.log("mongodb atlas connected");
+mongoose.connect(process.env.MONGO_URL, {
+  dbName: "curdCluster",
+  serverSelectionTimeoutMS: 5000
+})
+.then(() => console.log("MongoDB connected"))
+.catch(err => console.log("Mongo error:", err));
 
-    app.listen(PORT, () => {
-      console.log(`server running on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.log("DB error:", err);
-  });
 
 const plantsSchema = new mongoose.Schema({
   name: String,
@@ -90,6 +86,7 @@ app.post("/add",async(req,res)=>{
 });
 
 
-
-
-
+const PORT =process.env.PORT || 3000
+  app.listen(PORT, () => {
+      console.log(`server running on port ${PORT}`);
+    });
